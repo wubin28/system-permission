@@ -87,4 +87,13 @@ public class SystemPermission {
         state = GRANTED;
         notifyUserOfPermissionRequestResult();
     }
+
+    public void unixDeniedBy(UnixAdmin unixAdmin) {
+        if (!state.equals(UNIX_PERMISSION_CLAIMED))
+            throw new IllegalStateException("The state should be unix permission claimed when denied by unix admin");
+        if (!this.unixAdmin.equals(unixAdmin))
+            throw new IllegalArgumentException("The unix admin to deny should be the same one to claim.");
+        state = DENIED;
+        notifyUserOfPermissionRequestResult();
+    }
 }

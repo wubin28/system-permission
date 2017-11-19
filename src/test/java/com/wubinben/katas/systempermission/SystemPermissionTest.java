@@ -137,7 +137,20 @@ public class SystemPermissionTest {
         systemPermission.unixGrantedBy(new UnixAdmin());
     }
 
-    // should_be_denied_when_unix_denied_by_unix_admin_after_unix_permission_claimed
+    @Test
+    public void should_be_denied_when_unix_denied_by_unix_admin_after_unix_permission_claimed() throws Exception {
+        User user = new User();
+        SystemPermission systemPermission = new SystemPermission(user);
+        systemPermission.claimedBy(new SystemAdmin());
+        systemPermission.unixRequestedBy(user);
+        UnixAdmin unixAdmin = new UnixAdmin();
+        systemPermission.unixClaimedBy(unixAdmin);
+
+        systemPermission.unixDeniedBy(unixAdmin);
+
+        assertEquals(SystemPermission.DENIED, systemPermission.getState());
+    }
+
     // should_be_the_same_unix_admin_to_deny_after_unix_permission_claimed
     // should_be_unix_permission_claimed_when_unix_claimed_by_admin_after_unix_permission_requested
     // should_be_granted_when_unix_granted_by_admin_after_unix_permission_claimed
