@@ -9,6 +9,7 @@ public class SystemPermission {
     static final String CLAIMED = "CLAIMED";
     static final String GRANTED = "GRANTED";
     static final String DENIED = "DENIED";
+    static final String UNIX_PERMISSION_REQUESTED = "UNIX_PERMISSION_REQUESTED";
 
 
     public SystemPermission(User user) {
@@ -52,5 +53,11 @@ public class SystemPermission {
 
     private void notifyUserOfPermissionRequestResult() {
 
+    }
+
+    public void unixRequestedBy(User user) {
+        if (!state.equals(CLAIMED)) return;
+
+        state = UNIX_PERMISSION_REQUESTED;
     }
 }
