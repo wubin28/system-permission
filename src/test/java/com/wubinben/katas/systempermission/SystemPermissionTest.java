@@ -129,9 +129,10 @@ public class SystemPermissionTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void should_be_the_same_unix_admin_to_grant_after_unix_permission_claimed() throws Exception {
-        SystemPermission systemPermission = new SystemPermission(new User());
+        final User user = new User();
+        SystemPermission systemPermission = new SystemPermission(user);
         systemPermission.claimedBy(new SystemAdmin());
-        systemPermission.unixRequestedBy(new User());
+        systemPermission.unixRequestedBy(user);
         systemPermission.unixClaimedBy(new UnixAdmin());
 
         systemPermission.unixGrantedBy(new UnixAdmin());
