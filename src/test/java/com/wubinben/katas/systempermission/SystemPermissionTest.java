@@ -151,7 +151,16 @@ public class SystemPermissionTest {
         assertEquals(SystemPermission.DENIED, systemPermission.getState());
     }
 
-    // should_be_the_same_unix_admin_to_deny_after_unix_permission_claimed
+    @Test(expected = IllegalArgumentException.class)
+    public void should_be_the_same_unix_admin_to_deny_after_unix_permission_claimed() throws Exception {
+        SystemPermission systemPermission = new SystemPermission(new User());
+        systemPermission.claimedBy(new SystemAdmin());
+        systemPermission.unixRequestedBy(new User());
+        systemPermission.unixClaimedBy(new UnixAdmin());
+
+        systemPermission.unixDeniedBy(new UnixAdmin());
+    }
+
     // should_be_unix_permission_claimed_when_unix_claimed_by_admin_after_unix_permission_requested
     // should_be_granted_when_unix_granted_by_admin_after_unix_permission_claimed
     // should_be_denied_when_unix_denied_by_admin_after_unix_permission_claimed
