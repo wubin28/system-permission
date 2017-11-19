@@ -161,7 +161,12 @@ public class SystemPermissionTest {
         systemPermission.unixDeniedBy(new UnixAdmin());
     }
 
-    // should_be_unix_permission_claimed_when_unix_claimed_by_admin_after_unix_permission_requested
-    // should_be_granted_when_unix_granted_by_admin_after_unix_permission_claimed
-    // should_be_denied_when_unix_denied_by_admin_after_unix_permission_claimed
+    @Test(expected = IllegalStateException.class)
+    public void the_state_should_be_unix_permission_requested_when_unix_claimed_by_unix_admin() throws Exception {
+        SystemPermission systemPermission = new SystemPermission(new User());
+
+        systemPermission.unixClaimedBy(new UnixAdmin());
+    }
+
+
 }
