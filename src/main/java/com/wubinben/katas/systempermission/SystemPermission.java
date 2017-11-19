@@ -4,6 +4,7 @@ public class SystemPermission {
     private final User user;
     private String state;
     private SystemAdmin admin;
+    private UnixAdmin unixAdmin;
 
     static final String REQUESTED = "REQUESTED";
     static final String CLAIMED = "CLAIMED";
@@ -71,5 +72,19 @@ public class SystemPermission {
 
         willBeHandledBy(unixAdmin);
         state = UNIX_PERMISSION_CLAIMED;
+    }
+
+    private void willBeHandledBy(UnixAdmin unixAdmin) {
+        this.unixAdmin = unixAdmin;
+    }
+
+    public void unixGrantedBy(UnixAdmin unixAdmin) {
+        if (!state.equals(UNIX_PERMISSION_CLAIMED))
+            throw new IllegalStateException("The state should be unix permission claimed when unix granted by unix admin");
+        if (!this.unixAdmin.equals(unixAdmin))
+            throw new IllegalArgumentException("The unix admin to grant should be the same one to claim.");
+
+        state = GRANTED;
+        notifyUserOfPermissionRequestResult();
     }
 }
