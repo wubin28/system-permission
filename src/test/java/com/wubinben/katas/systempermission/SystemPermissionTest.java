@@ -93,7 +93,14 @@ public class SystemPermissionTest {
         systemPermission.unixRequestedBy(new User());
     }
 
-    // the_state_should_be_claimed_when_unix_requested_by_user
+    @Test(expected = IllegalStateException.class)
+    public void the_state_should_be_claimed_when_unix_requested_by_user() throws Exception {
+        User user = new User();
+        SystemPermission systemPermission = new SystemPermission(user);
+
+        systemPermission.unixRequestedBy(user);
+    }
+
     // should_be_unix_permission_claimed_when_unix_claimed_by_unix_admin_after_unix_permission_requested
     // should_be_granted_when_unix_granted_by_unix_admin_after_unix_permission_claimed
     // should_be_the_same_unix_admin_to_grant_after_unix_permission_claimed
