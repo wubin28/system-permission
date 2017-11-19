@@ -1,6 +1,7 @@
 package com.wubinben.katas.systempermission;
 
 public class SystemPermission {
+    private final User user;
     private String state;
     private SystemAdmin admin;
 
@@ -10,7 +11,8 @@ public class SystemPermission {
     static final String DENIED = "DENIED";
 
 
-    public SystemPermission() {
+    public SystemPermission(User user) {
+        this.user = user;
         this.state = REQUESTED;
     }
 
