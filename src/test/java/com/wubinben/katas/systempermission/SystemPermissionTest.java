@@ -32,7 +32,17 @@ public class SystemPermissionTest {
         assertEquals(SystemPermission.GRANTED, systemPermission.getState());
     }
 
-    // should_be_denied_when_denied_by_admin_after_claimed
+    @Test
+    public void should_be_denied_when_denied_by_admin_after_claimed() throws Exception {
+        SystemPermission systemPermission = new SystemPermission();
+        final SystemAdmin systemAdmin = new SystemAdmin();
+        systemPermission.claimedBy(systemAdmin);
+
+        systemPermission.deniedBy(systemAdmin);
+
+        assertEquals(SystemPermission.DENIED, systemPermission.getState());
+    }
+
     // should_be_unix_permission_requested_when_unix_requested_by_admin_after_claimed
     // should_be_unix_permission_claimed_when_unix_claimed_by_admin_after_unix_permission_requested
     // should_be_granted_when_unix_granted_by_admin_after_unix_permission_claimed
