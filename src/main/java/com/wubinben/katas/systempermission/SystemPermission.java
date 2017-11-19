@@ -35,8 +35,8 @@ public class SystemPermission {
     public void grantedBy(SystemAdmin systemAdmin) {
         if (!state.equals(CLAIMED))
             return;
-        if (!this.admin.equals(admin))
-            return;
+        if (!this.admin.equals(systemAdmin))
+            throw new IllegalArgumentException("The admin to grant should be the same one to claim.");
 
         state = GRANTED;
         notifyUserOfPermissionRequestResult();

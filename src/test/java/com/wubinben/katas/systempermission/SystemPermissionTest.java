@@ -32,7 +32,14 @@ public class SystemPermissionTest {
         assertEquals(SystemPermission.GRANTED, systemPermission.getState());
     }
 
-    // should_be_the_same_admin_to_grant_after_claimed
+    @Test(expected = IllegalArgumentException.class)
+    public void should_be_the_same_admin_to_grant_after_claimed() throws Exception {
+        SystemPermission systemPermission = new SystemPermission(new User());
+        systemPermission.claimedBy(new SystemAdmin());
+
+        systemPermission.grantedBy(new SystemAdmin());
+    }
+
 
     @Test
     public void should_be_denied_when_denied_by_admin_after_claimed() throws Exception {
