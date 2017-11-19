@@ -10,6 +10,7 @@ public class SystemPermission {
     static final String GRANTED = "GRANTED";
     static final String DENIED = "DENIED";
     static final String UNIX_PERMISSION_REQUESTED = "UNIX_PERMISSION_REQUESTED";
+    static final String UNIX_PERMISSION_CLAIMED = "UNIX_PERMISSION_CLAIMED";
 
 
     public SystemPermission(User user) {
@@ -62,5 +63,13 @@ public class SystemPermission {
             throw new IllegalArgumentException("The user to request unix permission should be the same one to request system permission");
 
         state = UNIX_PERMISSION_REQUESTED;
+    }
+
+    public void unixClaimedBy(UnixAdmin unixAdmin) {
+        if (!state.equals(UNIX_PERMISSION_REQUESTED))
+            throw new IllegalStateException("The state should be unix permission requested when unix claimed by unix admin");
+
+        willBeHandledBy(unixAdmin);
+        state = UNIX_PERMISSION_CLAIMED;
     }
 }
