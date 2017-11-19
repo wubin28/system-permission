@@ -168,5 +168,11 @@ public class SystemPermissionTest {
         systemPermission.unixClaimedBy(new UnixAdmin());
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void the_state_should_be_unix_permission_claimed_when_unix_granted_by_unix_admin() throws Exception {
+        SystemPermission systemPermission = new SystemPermission(new User());
+
+        systemPermission.unixGrantedBy(new UnixAdmin());
+    }
 
 }
