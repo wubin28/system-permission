@@ -45,8 +45,8 @@ public class SystemPermission {
     public void deniedBy(SystemAdmin systemAdmin) {
         if (!state.equals(CLAIMED))
             return;
-        if (!this.admin.equals(admin))
-            return;
+        if (!this.admin.equals(systemAdmin))
+            throw new IllegalArgumentException("The admin to deny should be the same one to claim.");
         state = DENIED;
         notifyUserOfPermissionRequestResult();
     }

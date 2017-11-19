@@ -40,7 +40,6 @@ public class SystemPermissionTest {
         systemPermission.grantedBy(new SystemAdmin());
     }
 
-
     @Test
     public void should_be_denied_when_denied_by_admin_after_claimed() throws Exception {
         SystemPermission systemPermission = new SystemPermission(new User());
@@ -52,7 +51,14 @@ public class SystemPermissionTest {
         assertEquals(SystemPermission.DENIED, systemPermission.getState());
     }
 
-    // should_be_the_same_admin_to_deny_after_claimed
+    @Test(expected = IllegalArgumentException.class)
+    public void should_be_the_same_admin_to_deny_after_claimed() throws Exception {
+        SystemPermission systemPermission = new SystemPermission(new User());
+        systemPermission.claimedBy(new SystemAdmin());
+
+        systemPermission.deniedBy(new SystemAdmin());
+    }
+
     @Test
     public void should_be_unix_permission_requested_when_unix_requested_by_user_after_claimed() throws Exception {
         User user = new User();
