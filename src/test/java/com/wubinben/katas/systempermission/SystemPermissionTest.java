@@ -85,7 +85,14 @@ public class SystemPermissionTest {
         assertEquals(SystemPermission.UNIX_PERMISSION_REQUESTED, systemPermission.getState());
     }
 
-    // should_be_the_same_user_to_request_unix_permission
+    @Test(expected = IllegalArgumentException.class)
+    public void should_be_the_same_user_to_request_unix_permission() throws Exception {
+        SystemPermission systemPermission = new SystemPermission(new User());
+        systemPermission.claimedBy(new SystemAdmin());
+
+        systemPermission.unixRequestedBy(new User());
+    }
+
     // the_state_should_be_claimed_when_unix_requested_by_user
     // should_be_unix_permission_claimed_when_unix_claimed_by_unix_admin_after_unix_permission_requested
     // should_be_granted_when_unix_granted_by_unix_admin_after_unix_permission_claimed

@@ -56,7 +56,10 @@ public class SystemPermission {
     }
 
     public void unixRequestedBy(User user) {
-        if (!state.equals(CLAIMED)) return;
+        if (!state.equals(CLAIMED))
+            return;
+        if (!this.user.equals(user))
+            throw new IllegalArgumentException("The user to request unix permission should be the same one to request system permission");
 
         state = UNIX_PERMISSION_REQUESTED;
     }
